@@ -44,7 +44,7 @@ export function BrandCard({ tenant, href, enterLabel, fallbackTag }: BrandCardPr
 							className="flex h-full w-full items-center justify-center text-xl font-bold"
 							style={{
 								backgroundColor: accent || 'var(--color-primary-700)',
-								color: pickOnColor(accent || '#003153'),
+								color: pickOnColor(accent || 'var(--color-primary-700)'),
 							}}
 						>
 							{initial}
