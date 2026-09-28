@@ -32,13 +32,23 @@ export function resolveIncomingTarget(search: string): IncomingTarget {
  * 裸根补 slug：`https://user.autional.cn/` → `https://user.autional.cn/demo/`。
  * 非裸根路径（已带 slug 的深链 / 无 slug 的门户深链）一律原样保留 ——
  * 后者按「无 slug 路径保持 404」口径处理，不做静默漏斗。
+ *
+ * 相对路径（`isValidRedirect` 允许的站内形式，如交棒链带过来的 `/oauth/...`）
+ * 无 origin 可解析，仅裸根补 slug，其余原样返回；绝不抛异常（本函数在点击
+ * 处理路径上，抛错即白屏）。
  */
 export function withSlug(targetUrl: string, slug: string): string {
-	const u = new URL(targetUrl);
-	if (u.pathname === '' || u.pathname === '/') {
-		u.pathname = `/${slug}/`;
+	if (targetUrl === '' || targetUrl === '/') return `/${slug}/`;
+	if (targetUrl.startsWith('/')) return targetUrl;
+	try {
+		const u = new URL(targetUrl);
+		if (u.pathname === '' || u.pathname === '/') {
+			u.pathname = `/${slug}/`;
+		}
+		return u.href;
+	} catch {
+		return targetUrl;
 	}
-	return u.href;
 }
 
 /** 登录完成后的落地 URL */
