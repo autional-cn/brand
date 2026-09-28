@@ -30,7 +30,7 @@ function SiteHeader() {
 	const { t } = useI18n();
 	return (
 		<header className="sticky top-0 z-20 border-b border-primary-100 bg-white/80 backdrop-blur-xl dark:border-white/10 dark:bg-primary-900">
-			<div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
+			<div className="mx-auto flex h-[var(--layout-header-height)] max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
 				<div className="flex items-center gap-3">
 					<img src="/logo-mark.svg" alt="" className="h-9 w-9" aria-hidden="true" />
 					<div className="leading-tight">
