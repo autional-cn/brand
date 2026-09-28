@@ -92,6 +92,14 @@ describe('resolveLanding', () => {
 		);
 	});
 
+	it('显式 admin 裸根 → 带 slug 落地（admin 入口不跳过 brand）', () => {
+		const incoming = resolveIncomingTarget('?redirect=https%3A%2F%2Fadmin.autional.cn%2F');
+		expect(resolveLanding(incoming, 'demo')).toBe('https://admin.autional.cn/demo/');
+		expect(buildBrandLoginUrl('demo', 'https://admin.autional.cn/demo/')).toBe(
+			'https://auth.autional.cn/demo/login?redirect=https%3A%2F%2Fadmin.autional.cn%2Fdemo%2F',
+		);
+	});
+
 	it('显式 auth 裸根 → 带 slug 的 auth 根（波 3 的 :tenantSlug index 承接）', () => {
 		const incoming = resolveIncomingTarget('?redirect=https%3A%2F%2Fauth.autional.cn%2F');
 		expect(resolveLanding(incoming, 'demo')).toBe('https://auth.autional.cn/demo/');
