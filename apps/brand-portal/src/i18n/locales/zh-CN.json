@@ -1,0 +1,37 @@
+{
+  "meta": {
+    "title": "Autional 品牌入口"
+  },
+  "header": {
+    "brand": "Autional",
+    "tagline": "统一身份与安全平台",
+    "langLabel": "语言"
+  },
+  "hero": {
+    "kicker": "选择组织",
+    "title": "选择你的组织",
+    "subtitle": "每个组织有独立的品牌、成员与权限。选定后进入对应的登录页。"
+  },
+  "search": {
+    "placeholder": "搜索组织名称或标识",
+    "noResult": "没有匹配的组织"
+  },
+  "card": {
+    "enter": "进入",
+    "fallbackTag": "组织"
+  },
+  "state": {
+    "loading": "正在加载组织列表…",
+    "emptyTitle": "暂无可用的组织",
+    "emptyDesc": "当前没有任何已开通的组织。如需开通，请联系平台管理员。",
+    "errorTitle": "组织列表加载失败",
+    "errorDesc": "无法连接到服务，请稍后重试。",
+    "retry": "重试",
+    "singleTenant": "正在进入 {{name}}…"
+  },
+  "footer": {
+    "privacy": "隐私政策",
+    "terms": "服务条款",
+    "trust": "信任中心"
+  }
+}
