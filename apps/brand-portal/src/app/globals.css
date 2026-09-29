@@ -1,5 +1,5 @@
 @import '@autional-cn/tailwind-preset/tokens.css';
-@import '@autional-cn/tailwind-preset/primitives.css';
+@import '@autional-cn/tokens/primitives.css';
 
 @tailwind base;
 @tailwind components;
