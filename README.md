@@ -27,7 +27,7 @@
 ## 与其它站的关系
 
 - 骨架（`packages/{shared,tailwind-preset,tsconfig,ui}`）与各门户**同构**，逐字同源。
-- 品牌数据源 = `GET /bff/tenant/api/v1/tenant/public/tenants` + 逐租户 `GET .../tenants/{slug}`，**公开端点，零后端改动**。
+- 品牌数据源 = `GET /bff/tenant/api/v1/tenant/public/tenants`（`?featured=true` 精选 / `keyword` 搜索分页 / 无参 legacy 全量）+ 逐租户 `GET .../tenants/{slug}`，均为公开端点。首页默认只展示精选组织（服务端 `featured` 标记 + `featured_sort` 排序，上限 24 个，由 service-tenant 管理端维护），其余组织通过搜索访问；「最近访问」chips 仅存本机 `localStorage`。
 - 本站自身 chrome 用 Autional 品牌令牌（`D:\autional\ui`）；**卡片内部**呈现的是**租户自己的**品牌（`logo_url` / `primary_color`）。两层不混。
 
 ## 开发

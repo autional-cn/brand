@@ -14,7 +14,19 @@
   },
   "search": {
     "placeholder": "Search by name or identifier",
-    "noResult": "No matching organization"
+    "clear": "Clear",
+    "minChars": "Type at least {{min}} characters to search",
+    "searching": "Searching…",
+    "resultCount": "{{total}} organizations found",
+    "noResult": "No matching organization",
+    "loadMore": "Load more",
+    "loadingMore": "Loading…",
+    "endOfResults": "All {{total}} results shown",
+    "errorTitle": "Search failed"
+  },
+  "section": {
+    "featured": "Featured organizations",
+    "recent": "Recently visited"
   },
   "card": {
     "enter": "Enter",
@@ -27,7 +39,9 @@
     "errorTitle": "Failed to load organizations",
     "errorDesc": "Could not reach the service. Please try again later.",
     "retry": "Retry",
-    "singleTenant": "Taking you to {{name}}…"
+    "singleTenant": "Taking you to {{name}}…",
+    "featuredEmptyTitle": "No featured organizations",
+    "featuredEmptyDesc": "Use the search box above to find your organization."
   },
   "footer": {
     "privacy": "Privacy",

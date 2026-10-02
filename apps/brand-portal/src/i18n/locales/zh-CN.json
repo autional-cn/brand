@@ -14,7 +14,19 @@
   },
   "search": {
     "placeholder": "搜索组织名称或标识",
-    "noResult": "没有匹配的组织"
+    "clear": "清除",
+    "minChars": "输入至少 {{min}} 个字符开始搜索",
+    "searching": "搜索中…",
+    "resultCount": "找到 {{total}} 个组织",
+    "noResult": "没有匹配的组织",
+    "loadMore": "加载更多",
+    "loadingMore": "加载中…",
+    "endOfResults": "已显示全部 {{total}} 个结果",
+    "errorTitle": "搜索失败"
+  },
+  "section": {
+    "featured": "精选组织",
+    "recent": "最近访问"
   },
   "card": {
     "enter": "进入",
@@ -27,7 +39,9 @@
     "errorTitle": "组织列表加载失败",
     "errorDesc": "无法连接到服务，请稍后重试。",
     "retry": "重试",
-    "singleTenant": "正在进入 {{name}}…"
+    "singleTenant": "正在进入 {{name}}…",
+    "featuredEmptyTitle": "暂无精选组织",
+    "featuredEmptyDesc": "请在搜索框中输入组织名称进行查找。"
   },
   "footer": {
     "privacy": "隐私政策",

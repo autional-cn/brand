@@ -8,10 +8,12 @@ interface BrandCardProps {
 	href: string;
 	enterLabel: string;
 	fallbackTag: string;
+	/** 点击进入时回调（导航前同步执行，用于记录最近访问；不传时行为与现状一致） */
+	onNavigate?: (tenant: TenantBase) => void;
 }
 
 /** 卡片内部呈现「租户自己的」品牌（logo / primary_color）；卡片外壳仍是 Autional 品牌。 */
-export function BrandCard({ tenant, href, enterLabel, fallbackTag }: BrandCardProps) {
+export function BrandCard({ tenant, href, enterLabel, fallbackTag, onNavigate }: BrandCardProps) {
 	const [logoFailed, setLogoFailed] = useState(false);
 	const { data } = useTenantBranding(tenant.slug);
 	const branding = data ?? EMPTY_BRANDING;
@@ -23,6 +25,7 @@ export function BrandCard({ tenant, href, enterLabel, fallbackTag }: BrandCardPr
 	return (
 		<a
 			href={href}
+			onClick={() => onNavigate?.(tenant)}
 			aria-label={`${enterLabel} ${tenant.displayName}`}
 			className="brand-card group relative flex flex-col overflow-hidden transition duration-200 hover:-translate-y-1 hover:border-primary-300 hover:shadow-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2"
 			style={accent ? ({ '--card-accent': accent } as React.CSSProperties) : undefined}

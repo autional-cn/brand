@@ -6,9 +6,10 @@ interface BrandGridProps {
 	hrefFor: (tenant: TenantBase) => string;
 	enterLabel: string;
 	fallbackTag: string;
+	onNavigate?: (tenant: TenantBase) => void;
 }
 
-export function BrandGrid({ tenants, hrefFor, enterLabel, fallbackTag }: BrandGridProps) {
+export function BrandGrid({ tenants, hrefFor, enterLabel, fallbackTag, onNavigate }: BrandGridProps) {
 	return (
 		<div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
 			{tenants.map((tenant) => (
@@ -18,6 +19,7 @@ export function BrandGrid({ tenants, hrefFor, enterLabel, fallbackTag }: BrandGr
 					href={hrefFor(tenant)}
 					enterLabel={enterLabel}
 					fallbackTag={fallbackTag}
+					onNavigate={onNavigate}
 				/>
 			))}
 		</div>

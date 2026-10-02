@@ -1,8 +1,16 @@
-import { useEffect, useMemo, useState } from 'react';
-import { AlertCircle, Inbox, Loader2, Search } from 'lucide-react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { AlertCircle, Inbox, Loader2, Search, X } from 'lucide-react';
 import { getPortalUrl } from '@autional-cn/shared';
 import { I18nProvider, useI18n } from '@/lib/i18n';
-import { useTenantList, type TenantBase } from '@/lib/tenants';
+import {
+	MIN_SEARCH_CHARS,
+	useFeaturedTenants,
+	useRecentTenants,
+	useSearchTenants,
+	useSingleTenantProbe,
+	type TenantBase,
+} from '@/lib/tenants';
+import { useDebouncedValue } from '@/lib/use-debounce';
 import {
 	buildBrandLoginUrl,
 	resolveIncomingTarget,
@@ -11,6 +19,8 @@ import {
 } from '@/lib/target';
 import { BrandGrid } from '@/components/BrandGrid';
 import { EmptyState } from '@/components/EmptyState';
+import { RecentTenants } from '@/components/RecentTenants';
+import { SearchResults } from '@/components/SearchResults';
 
 function LangSwitch() {
 	const { lang, setLang, t } = useI18n();
@@ -75,10 +85,26 @@ function SiteFooter() {
 	);
 }
 
+/** 加载块（精选首载 / 单租户跳转中共用，零新样式） */
+function LoadingBlock({ label }: { label: string }) {
+	return (
+		<div className="flex flex-col items-center gap-3 py-16 text-neutral-500 dark:text-neutral-400">
+			<Loader2 className="h-6 w-6 animate-spin text-primary-600 dark:text-sky-300" aria-hidden="true" />
+			<p className="text-sm">{label}</p>
+		</div>
+	);
+}
+
 function BrandPortal() {
 	const { t } = useI18n();
-	const { data, isLoading, isError, refetch } = useTenantList();
 	const [keyword, setKeyword] = useState('');
+	const inputRef = useRef<HTMLInputElement>(null);
+
+	// 输入驱动 UI（提示/清除）；查询走防抖值。清除立即回默认视图（不发请求）。
+	const debouncedKeyword = useDebouncedValue(keyword, 300);
+	const trimmed = keyword.trim();
+	const searchKw = (trimmed === '' ? '' : debouncedKeyword).trim();
+	const searchActive = searchKw.length >= MIN_SEARCH_CHARS;
 
 	// 入口目标只解析一次（?redirect= 在当前会话内不变）
 	const incoming: IncomingTarget = useMemo(() => resolveIncomingTarget(window.location.search), []);
@@ -89,23 +115,41 @@ function BrandPortal() {
 		[incoming],
 	);
 
-	const tenants = data ?? [];
-	const filtered = useMemo(() => {
-		const kw = keyword.trim().toLowerCase();
-		if (!kw) return tenants;
-		return tenants.filter((x) =>
-			[x.displayName, x.slug].some((v) => v?.toLowerCase().includes(kw)),
-		);
-	}, [tenants, keyword]);
+	const { recent, recordRecent } = useRecentTenants();
+
+	const featuredQuery = useFeaturedTenants();
+	const featured = featuredQuery.data ?? [];
+
+	// 单租户条件探针：featured 已加载且 ≤1 时才拉一次全量（常规路径零额外请求）
+	const probeEnabled = !featuredQuery.isLoading && !featuredQuery.isError && featured.length <= 1;
+	const probeQuery = useSingleTenantProbe(probeEnabled);
+	const probeTenants = probeQuery.data ?? [];
 
 	// 单租户自动跳过（与 auth 侧 SelectTenantPage 同口径）
 	useEffect(() => {
-		if (tenants.length === 1) {
-			window.location.replace(hrefFor(tenants[0]));
+		if (probeEnabled && probeTenants.length === 1) {
+			window.location.replace(hrefFor(probeTenants[0]));
 		}
-	}, [tenants, hrefFor]);
+	}, [probeEnabled, probeTenants, hrefFor]);
 
-	const singleTenantName = tenants.length === 1 ? tenants[0].displayName : '';
+	const singleTenantName =
+		probeTenants.length === 1
+			? probeTenants[0].displayName
+			: featured.length === 1
+				? featured[0].displayName
+				: '';
+
+	const searchQuery = useSearchTenants(searchKw);
+	const searchItems = useMemo(
+		() => searchQuery.data?.pages.flatMap((p) => p.items) ?? [],
+		[searchQuery.data],
+	);
+	const searchTotal = searchQuery.data?.pages[0]?.total ?? 0;
+
+	const clearSearch = () => {
+		setKeyword('');
+		inputRef.current?.focus();
+	};
 
 	return (
 		<div className="relative min-h-screen">
@@ -113,8 +157,8 @@ function BrandPortal() {
 			<div className="relative flex min-h-screen flex-col">
 				<SiteHeader />
 
-				<main className="mx-auto w-full max-w-6xl flex-1 px-4 py-12 sm:px-6 sm:py-16">
-					<div className="mb-10 text-center">
+				<main className="mx-auto w-full max-w-6xl flex-1 px-4 pb-16 pt-10 sm:px-6 sm:pt-14">
+					<div className="mb-8 text-center">
 						<span className="brand-kicker">{t('hero.kicker')}</span>
 						<h1 className="mt-5 text-3xl font-bold tracking-tight text-primary-900 sm:text-4xl dark:text-white">
 							{t('hero.title')}
@@ -124,64 +168,113 @@ function BrandPortal() {
 						</p>
 					</div>
 
-					{isLoading && tenants.length === 0 ? (
-						<div className="flex flex-col items-center gap-3 py-16 text-neutral-500 dark:text-neutral-400">
-							<Loader2 className="h-6 w-6 animate-spin text-primary-600 dark:text-sky-300" aria-hidden="true" />
-							<p className="text-sm">{t('state.loading')}</p>
+					<div className="mx-auto mb-10 max-w-xl">
+						<div className="relative">
+							<Search
+								className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-neutral-400"
+								aria-hidden="true"
+							/>
+							<input
+								ref={inputRef}
+								type="search"
+								value={keyword}
+								onChange={(e) => setKeyword(e.target.value)}
+								placeholder={t('search.placeholder')}
+								aria-label={t('search.placeholder')}
+								className="w-full rounded-full border border-primary-200 bg-white/90 py-3.5 pl-11 pr-12 text-base text-primary-900 shadow-soft outline-none transition duration-150 placeholder:text-neutral-400 focus:border-primary-400 focus:ring-2 focus:ring-primary-200 sm:text-sm dark:border-white/10 dark:bg-white/5 dark:text-white dark:focus:border-sky-400"
+							/>
+							{keyword !== '' ? (
+								<button
+									type="button"
+									onClick={clearSearch}
+									aria-label={t('search.clear')}
+									className="absolute right-2 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full text-neutral-400 transition duration-150 hover:bg-sky-50 hover:text-primary-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 dark:hover:bg-white/10 dark:hover:text-sky-300"
+								>
+									<X className="h-4 w-4" aria-hidden="true" />
+								</button>
+							) : null}
 						</div>
-					) : isError ? (
+						{trimmed !== '' && trimmed.length < MIN_SEARCH_CHARS ? (
+							<p className="mt-3 text-center text-xs text-neutral-500 dark:text-neutral-400">
+								{t('search.minChars', { min: MIN_SEARCH_CHARS })}
+							</p>
+						) : null}
+					</div>
+
+					{searchActive ? (
+						<SearchResults
+							items={searchItems}
+							total={searchTotal}
+							isPending={searchQuery.isPending}
+							isFetching={searchQuery.isFetching}
+							isError={searchQuery.isError}
+							hasNext={searchQuery.hasNextPage ?? false}
+							isFetchingNextPage={searchQuery.isFetchingNextPage}
+							onLoadMore={() => searchQuery.fetchNextPage()}
+							onRetry={() => searchQuery.refetch()}
+							hrefFor={hrefFor}
+							onNavigate={recordRecent}
+						/>
+					) : featuredQuery.isLoading && featured.length === 0 ? (
+						<LoadingBlock label={t('state.loading')} />
+					) : featuredQuery.isError ? (
 						<EmptyState
 							icon={<AlertCircle className="h-7 w-7" aria-hidden="true" />}
 							title={t('state.errorTitle')}
 							description={t('state.errorDesc')}
 							action={
-								<button type="button" className="brand-button-primary" onClick={() => refetch()}>
+								<button type="button" className="brand-button-primary" onClick={() => featuredQuery.refetch()}>
 									{t('state.retry')}
 								</button>
 							}
 						/>
-					) : tenants.length === 0 ? (
+					) : probeEnabled && probeQuery.isLoading ? (
+						<LoadingBlock
+							label={
+								featured.length === 1
+									? t('state.singleTenant', { name: singleTenantName })
+									: t('state.loading')
+							}
+						/>
+					) : probeEnabled && probeQuery.isSuccess && probeTenants.length === 0 ? (
 						<EmptyState
 							icon={<Inbox className="h-7 w-7" aria-hidden="true" />}
 							title={t('state.emptyTitle')}
 							description={t('state.emptyDesc')}
 						/>
-					) : tenants.length === 1 ? (
-						<div className="flex flex-col items-center gap-3 py-16 text-neutral-500 dark:text-neutral-400">
-							<Loader2 className="h-6 w-6 animate-spin text-primary-600 dark:text-sky-300" aria-hidden="true" />
-							<p className="text-sm">{t('state.singleTenant', { name: singleTenantName })}</p>
-						</div>
+					) : probeEnabled && probeTenants.length === 1 ? (
+						<LoadingBlock label={t('state.singleTenant', { name: singleTenantName })} />
 					) : (
 						<>
-							<div className="mx-auto mb-8 max-w-md">
-								<div className="relative">
-									<Search
-										className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-neutral-400"
-										aria-hidden="true"
-									/>
-									<input
-										type="search"
-										value={keyword}
-										onChange={(e) => setKeyword(e.target.value)}
-										placeholder={t('search.placeholder')}
-										aria-label={t('search.placeholder')}
-										className="w-full rounded-full border border-primary-200 bg-white/90 py-3 pl-11 pr-5 text-sm text-primary-900 shadow-soft outline-none transition placeholder:text-neutral-400 focus:border-primary-400 focus:ring-2 focus:ring-primary-200 dark:border-white/10 dark:bg-white/5 dark:text-white dark:focus:border-sky-400"
-									/>
-								</div>
-							</div>
+							{recent.length > 0 ? (
+								<RecentTenants recent={recent} hrefFor={hrefFor} onNavigate={recordRecent} />
+							) : null}
 
-							{filtered.length === 0 ? (
-								<p className="py-12 text-center text-sm text-neutral-500 dark:text-neutral-400">
-									{t('search.noResult')}
-								</p>
-							) : (
-								<BrandGrid
-									tenants={filtered}
-									hrefFor={hrefFor}
-									enterLabel={t('card.enter')}
-									fallbackTag={t('card.fallbackTag')}
-								/>
-							)}
+							<section aria-labelledby="featured-heading">
+								<div className="mb-4 flex items-baseline justify-between">
+									<h2
+										id="featured-heading"
+										className="text-lg font-semibold text-primary-900 dark:text-white"
+									>
+										{t('section.featured')}
+									</h2>
+								</div>
+								{featured.length === 0 ? (
+									<EmptyState
+										icon={<Inbox className="h-7 w-7" aria-hidden="true" />}
+										title={t('state.featuredEmptyTitle')}
+										description={t('state.featuredEmptyDesc')}
+									/>
+								) : (
+									<BrandGrid
+										tenants={featured}
+										hrefFor={hrefFor}
+										enterLabel={t('card.enter')}
+										fallbackTag={t('card.fallbackTag')}
+										onNavigate={recordRecent}
+									/>
+								)}
+							</section>
 						</>
 					)}
 				</main>
