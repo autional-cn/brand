@@ -16,7 +16,7 @@
   "dependencies": {
     "@autional-cn/shared": "0.1.0-rc.10",
     "@autional-cn/tailwind-preset": "0.1.0-rc",
-    "@autional-cn/tokens": "0.1.0-rc",
+    "@autional-cn/tokens": "0.1.0-rc.2",
     "@tanstack/react-query": "5.100.9",
     "i18next": "26.0.10",
     "i18next-browser-languagedetector": "8.2.1",
