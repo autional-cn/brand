@@ -7,6 +7,10 @@
     "tagline": "统一身份与安全平台",
     "langLabel": "语言"
   },
+  "theme": {
+    "switchToLight": "切换到浅色模式",
+    "switchToDark": "切换到深色模式"
+  },
   "hero": {
     "kicker": "选择组织",
     "title": "选择你的组织",

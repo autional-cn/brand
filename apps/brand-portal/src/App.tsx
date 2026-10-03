@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { AlertCircle, Inbox, Loader2, Search, X } from 'lucide-react';
 import { getPortalUrl } from '@autional-cn/shared';
+import { ThemeProvider, ThemeToggle } from '@autional-cn/ui';
 import { I18nProvider, useI18n } from '@/lib/i18n';
 import {
 	MIN_SEARCH_CHARS,
@@ -52,7 +53,15 @@ function SiteHeader() {
 						</p>
 					</div>
 				</div>
-				<LangSwitch />
+				<div className="flex items-center gap-2">
+					<ThemeToggle
+						className="brand-button-secondary !px-3 !py-2"
+						iconSize={16}
+						labelLight={t('theme.switchToLight')}
+						labelDark={t('theme.switchToDark')}
+					/>
+					<LangSwitch />
+				</div>
 			</div>
 		</header>
 	);
@@ -288,7 +297,9 @@ function BrandPortal() {
 export default function App() {
 	return (
 		<I18nProvider>
-			<BrandPortal />
+			<ThemeProvider storageKey="brand-portal-theme">
+				<BrandPortal />
+			</ThemeProvider>
 		</I18nProvider>
 	);
 }

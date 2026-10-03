@@ -7,6 +7,10 @@
     "tagline": "Unified identity & security platform",
     "langLabel": "Language"
   },
+  "theme": {
+    "switchToLight": "Switch to Light Mode",
+    "switchToDark": "Switch to Dark Mode"
+  },
   "hero": {
     "kicker": "Choose organization",
     "title": "Choose your organization",

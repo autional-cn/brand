@@ -54,6 +54,9 @@ importers:
       '@autional-cn/tokens':
         specifier: 0.1.0-rc.3
         version: 0.1.0-rc.3
+      '@autional-cn/ui':
+        specifier: 0.1.0-rc.14
+        version: 0.1.0-rc.14(@autional-cn/tokens@0.1.0-rc.3)(i18next@26.0.10(typescript@5.8.3))(lucide-react@0.509.0(react@19.2.5))(react-dom@19.2.5(react@19.2.5))(react-i18next@17.0.7(i18next@26.0.10(typescript@5.8.3))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(typescript@5.8.3))(react@19.2.5)
       '@tanstack/react-query':
         specifier: 5.100.9
         version: 5.100.9(react@19.2.5)
@@ -147,6 +150,20 @@ packages:
 
   '@autional-cn/tsconfig@0.1.0-rc':
     resolution: {integrity: sha512-XY7N2lbMlR1D+OlkxDAw9Pz9CleV4UZ14RfWkkhGTZbbHvxT/d69H8GXWhyc9/634RoEUyVajYmjT75cZbKF4A==}
+
+  '@autional-cn/ui@0.1.0-rc.14':
+    resolution: {integrity: sha512-3Hdl46hEVHpFZHEmS+VWMj1KBrTJHwenwPZ07N7NHZcE6PhJJyDN7j2l13yKNozeot08COfVh29hVw/6aHPBgg==}
+    peerDependencies:
+      '@autional-cn/tokens': '>=0.1.0-rc'
+      antd: '>=6.0.0'
+      i18next: '>=26.0.0'
+      lucide-react: '>=0.500.0'
+      react: 19.2.5
+      react-dom: 19.2.5
+      react-i18next: '>=17.0.0'
+    peerDependenciesMeta:
+      antd:
+        optional: true
 
   '@babel/code-frame@7.29.7':
     resolution: {integrity: sha512-Aup7aUOfpbAUg2ROOJN6Iw5f9DMBlzu0mIkm/malLQFN/YQgO48wCj0Kxa3sEHJvPVFg7siR+qRInwXd2qhQKw==}
@@ -1747,6 +1764,15 @@ snapshots:
   '@autional-cn/tokens@0.1.0-rc.3': {}
 
   '@autional-cn/tsconfig@0.1.0-rc': {}
+
+  '@autional-cn/ui@0.1.0-rc.14(@autional-cn/tokens@0.1.0-rc.3)(i18next@26.0.10(typescript@5.8.3))(lucide-react@0.509.0(react@19.2.5))(react-dom@19.2.5(react@19.2.5))(react-i18next@17.0.7(i18next@26.0.10(typescript@5.8.3))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(typescript@5.8.3))(react@19.2.5)':
+    dependencies:
+      '@autional-cn/tokens': 0.1.0-rc.3
+      i18next: 26.0.10(typescript@5.8.3)
+      lucide-react: 0.509.0(react@19.2.5)
+      react: 19.2.5
+      react-dom: 19.2.5(react@19.2.5)
+      react-i18next: 17.0.7(i18next@26.0.10(typescript@5.8.3))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(typescript@5.8.3)
 
   '@babel/code-frame@7.29.7':
     dependencies:
