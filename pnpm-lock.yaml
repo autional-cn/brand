@@ -46,11 +46,11 @@ importers:
   apps/brand-portal:
     dependencies:
       '@autional-cn/shared':
-        specifier: 0.1.0-rc.14
-        version: 0.1.0-rc.14(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(use-sync-external-store@1.7.0(react@19.2.5))
+        specifier: 0.1.0-rc.15
+        version: 0.1.0-rc.15(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(use-sync-external-store@1.7.0(react@19.2.5))
       '@autional-cn/tailwind-preset':
-        specifier: 0.1.0-rc
-        version: 0.1.0-rc(tailwindcss@3.4.19)
+        specifier: 0.1.0-rc.1
+        version: 0.1.0-rc.1(tailwindcss@3.4.19)
       '@autional-cn/tokens':
         specifier: 0.1.0-rc.3
         version: 0.1.0-rc.3
@@ -131,19 +131,16 @@ packages:
   '@asamuzakjp/nwsapi@2.3.9':
     resolution: {integrity: sha512-n8GuYSrI9bF7FFZ/SjhwevlHc8xaVlb/7HmHelnc/PZXBD2ZR49NnN9sMMuDdEGPeeRQ5d0hqlSlEpgCX3Wl0Q==}
 
-  '@autional-cn/shared@0.1.0-rc.14':
-    resolution: {integrity: sha512-lEi3UR1lHwDntnyhzvRelShBa7/AgrHrC4fgH9JB0nsemyHG3vGmN4QfPwvz33UVKDhwM1oBhjm4Xfpjt9gOww==}
+  '@autional-cn/shared@0.1.0-rc.15':
+    resolution: {integrity: sha512-V6tk5b0zd0jl28gu1pnVW1V4UB2gOpzZyFJVzfHovDxVfMQapdvWvq2FDDpNWOfuk/96EHWSCfCI51AEf2svQA==}
     peerDependencies:
       react: 19.2.5
       react-dom: 19.2.5
 
-  '@autional-cn/tailwind-preset@0.1.0-rc':
-    resolution: {integrity: sha512-EAtWBIyML8SrzVKs7batJ/gwFM/A86ir2HlGxlzDWoZpzxq94KK4QwXzt0XVBHgJsScrdnqWDIECuRjayYesRA==}
+  '@autional-cn/tailwind-preset@0.1.0-rc.1':
+    resolution: {integrity: sha512-/YrpttvCy6R9L97QYhiNpnmlEmCqueEt6wjc0O/0q+T5A9fS8/d7R1QZW6O2J+O/a+b50u9cFHLEv/RlH80LTg==}
     peerDependencies:
       tailwindcss: '>=3.0.0'
-
-  '@autional-cn/tokens@0.1.0-rc':
-    resolution: {integrity: sha512-L0G4zxni+1jkpgNVdJ7cF6rAsEZeHoGXVGBM0YVlnw7pcB1NfoXyFNmm7yss0Jmu2eG9joIdbQh1EqVMipbSMg==}
 
   '@autional-cn/tokens@0.1.0-rc.3':
     resolution: {integrity: sha512-qBkqGOr6P0m31RrehjOAPp105UIZiIR9LJkSEUPoRtVY9ZlH/ghzCGodnam/cUOVgIjnt6fh2RkXF7fsm7gt/g==}
@@ -1724,7 +1721,7 @@ snapshots:
 
   '@asamuzakjp/nwsapi@2.3.9': {}
 
-  '@autional-cn/shared@0.1.0-rc.14(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(use-sync-external-store@1.7.0(react@19.2.5))':
+  '@autional-cn/shared@0.1.0-rc.15(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(use-sync-external-store@1.7.0(react@19.2.5))':
     dependencies:
       '@opentelemetry/api': 1.9.1
       '@tanstack/react-query': 5.100.9(react@19.2.5)
@@ -1742,12 +1739,10 @@ snapshots:
       - immer
       - use-sync-external-store
 
-  '@autional-cn/tailwind-preset@0.1.0-rc(tailwindcss@3.4.19)':
+  '@autional-cn/tailwind-preset@0.1.0-rc.1(tailwindcss@3.4.19)':
     dependencies:
-      '@autional-cn/tokens': 0.1.0-rc
+      '@autional-cn/tokens': 0.1.0-rc.3
       tailwindcss: 3.4.19
-
-  '@autional-cn/tokens@0.1.0-rc': {}
 
   '@autional-cn/tokens@0.1.0-rc.3': {}
 

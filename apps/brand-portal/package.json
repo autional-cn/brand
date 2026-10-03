@@ -14,8 +14,8 @@
     "clean": "rimraf dist"
   },
   "dependencies": {
-    "@autional-cn/shared": "0.1.0-rc.14",
-    "@autional-cn/tailwind-preset": "0.1.0-rc",
+    "@autional-cn/shared": "0.1.0-rc.15",
+    "@autional-cn/tailwind-preset": "0.1.0-rc.1",
     "@autional-cn/tokens": "0.1.0-rc.3",
     "@tanstack/react-query": "5.100.9",
     "i18next": "26.0.10",
