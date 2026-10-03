@@ -46,13 +46,13 @@ importers:
   apps/brand-portal:
     dependencies:
       '@autional-cn/shared':
-        specifier: 0.1.0-rc.10
-        version: 0.1.0-rc.10(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(use-sync-external-store@1.7.0(react@19.2.5))
+        specifier: ^0.1.0-rc.13
+        version: 0.1.0-rc.13(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(use-sync-external-store@1.7.0(react@19.2.5))
       '@autional-cn/tailwind-preset':
-        specifier: 0.1.0-rc
+        specifier: ^0.1.0-rc
         version: 0.1.0-rc(tailwindcss@3.4.19)
       '@autional-cn/tokens':
-        specifier: 0.1.0-rc.2
+        specifier: ^0.1.0-rc.2
         version: 0.1.0-rc.2
       '@tanstack/react-query':
         specifier: 5.100.9
@@ -80,7 +80,7 @@ importers:
         version: 7.15.0(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
     devDependencies:
       '@autional-cn/tsconfig':
-        specifier: 0.1.0-rc
+        specifier: ^0.1.0-rc
         version: 0.1.0-rc
       '@types/react':
         specifier: 19.2.14
@@ -131,8 +131,8 @@ packages:
   '@asamuzakjp/nwsapi@2.3.9':
     resolution: {integrity: sha512-n8GuYSrI9bF7FFZ/SjhwevlHc8xaVlb/7HmHelnc/PZXBD2ZR49NnN9sMMuDdEGPeeRQ5d0hqlSlEpgCX3Wl0Q==}
 
-  '@autional-cn/shared@0.1.0-rc.10':
-    resolution: {integrity: sha512-vl7pYRiyaO4IT216Llqu5qU93wiXym+CyFjmzvBaIZhBOb61kwYOkLni0WthrYd/IWhWn3oSwyu+4Ttr0Q/yeg==}
+  '@autional-cn/shared@0.1.0-rc.13':
+    resolution: {integrity: sha512-+dqSRvhA2WmwnJr7OMrU6R6wKdxsSU/cWk1mJ9FAY0RJcr7OYCM+TXKNsYF4vsdMOLJxM1RDYE3Mbkg+582I5Q==}
     peerDependencies:
       react: 19.2.5
       react-dom: 19.2.5
@@ -1724,7 +1724,7 @@ snapshots:
 
   '@asamuzakjp/nwsapi@2.3.9': {}
 
-  '@autional-cn/shared@0.1.0-rc.10(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(use-sync-external-store@1.7.0(react@19.2.5))':
+  '@autional-cn/shared@0.1.0-rc.13(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(use-sync-external-store@1.7.0(react@19.2.5))':
     dependencies:
       '@opentelemetry/api': 1.9.1
       '@tanstack/react-query': 5.100.9(react@19.2.5)
