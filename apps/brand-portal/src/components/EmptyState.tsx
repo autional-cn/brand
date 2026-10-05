@@ -15,7 +15,7 @@ export function EmptyState({ icon, title, description, action }: EmptyStateProps
 			</div>
 			<h2 className="mt-5 text-xl font-semibold text-primary-900 dark:text-white">{title}</h2>
 			{description ? (
-				<p className="mt-2 text-sm leading-6 text-neutral-600 dark:text-neutral-300">
+				<p className="mt-2 text-sm leading-6 text-[var(--color-text-muted)]">
 					{description}
 				</p>
 			) : null}
