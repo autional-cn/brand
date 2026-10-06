@@ -57,7 +57,7 @@ export function SearchResults({
 		return (
 			<div className="mx-auto max-w-3xl" role="status" aria-live="polite">
 				<span className="sr-only">{t('search.searching')}</span>
-				<div className="overflow-hidden rounded-2xl border border-primary-100 bg-white/90 shadow-soft dark:border-white/10 dark:bg-white/5">
+				<div className="overflow-hidden rounded-md border border-primary-100 bg-white/90 shadow-soft dark:border-white/10 dark:bg-white/5">
 					{Array.from({ length: SKELETON_ROWS }).map((_, i) => (
 						<div
 							key={i}
@@ -66,8 +66,8 @@ export function SearchResults({
 						>
 							<span className="h-10 w-10 rounded-xl bg-neutral-200/70 dark:bg-white/10" />
 							<span className="flex-1 space-y-2">
-								<span className="block h-3.5 w-40 rounded bg-neutral-200/70 dark:bg-white/10" />
-								<span className="block h-3 w-24 rounded bg-neutral-200/70 dark:bg-white/10" />
+								<span className="block h-3.5 w-40 rounded-xs bg-neutral-200/70 dark:bg-white/10" />
+								<span className="block h-3 w-24 rounded-xs bg-neutral-200/70 dark:bg-white/10" />
 							</span>
 						</div>
 					))}
@@ -97,7 +97,7 @@ export function SearchResults({
 					: t('search.resultCount', { total })}
 			</p>
 
-			<div className="mx-auto max-w-3xl overflow-hidden rounded-2xl border border-primary-100 bg-white/90 shadow-soft dark:border-white/10 dark:bg-white/5">
+			<div className="mx-auto max-w-3xl overflow-hidden rounded-md border border-primary-100 bg-white/90 shadow-soft dark:border-white/10 dark:bg-white/5">
 				<ul className="divide-y divide-primary-100/70 dark:divide-white/10">
 					{items.map((r) => {
 						const initial = (r.displayName || r.slug).trim().charAt(0).toUpperCase() || '?';

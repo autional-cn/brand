@@ -32,7 +32,7 @@ export function BrandCard({ tenant, href, enterLabel, onNavigate }: BrandCardPro
 			<span className="brand-card-accent block h-1 w-full" aria-hidden="true" />
 
 			<div className="flex flex-1 items-start gap-4 p-6">
-				<div className="flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-soft">
+				<div className="flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-md border border-neutral-200 bg-white shadow-soft">
 					{showLogo ? (
 						<img
 							src={branding.logoUrl}
