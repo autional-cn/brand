@@ -26,7 +26,7 @@ export function BrandCard({ tenant, href, enterLabel, onNavigate }: BrandCardPro
 			href={href}
 			onClick={() => onNavigate?.(tenant)}
 			aria-label={`${enterLabel} ${tenant.displayName}`}
-			className="brand-card group relative flex flex-col overflow-hidden transition duration-200 hover:-translate-y-1 hover:border-primary-300 hover:shadow-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2"
+			className="brand-card group relative flex flex-col overflow-hidden transition duration-200 hover:-translate-y-1 hover:border-primary-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2"
 			style={accent ? ({ '--card-accent': accent } as React.CSSProperties) : undefined}
 		>
 			<span className="brand-card-accent block h-1 w-full" aria-hidden="true" />
