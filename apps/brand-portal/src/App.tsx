@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { AlertCircle, Inbox, Loader2, Search, X } from 'lucide-react';
 import { getPortalUrl } from '@autional/shared';
-import { ThemeProvider, ThemeToggle } from '@autional/ui';
+import { ThemeProvider, ThemeToggle, Input } from '@autional/ui';
 import { I18nProvider, useI18n } from '@/lib/i18n';
 import {
 	MIN_SEARCH_CHARS,
@@ -194,31 +194,29 @@ function BrandPortal() {
 					</div>
 
 					<div className="mx-auto mb-10 max-w-xl">
-						<div className="relative">
-							<Search
-								className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--color-text-muted)]"
-								aria-hidden="true"
-							/>
-							<input
-								ref={inputRef}
-								type="search"
-								value={keyword}
-								onChange={(e) => setKeyword(e.target.value)}
-								placeholder={t('search.placeholder')}
-								aria-label={t('search.placeholder')}
-								className="w-full rounded-full border border-primary-200 bg-white/90 py-3.5 pl-11 pr-12 text-base text-primary-900 shadow-soft outline-none transition duration-150 placeholder:text-[var(--color-text-muted)] focus:border-primary-400 focus:ring-2 focus:ring-primary-200 sm:text-sm dark:border-white/10 dark:bg-white/5 dark:text-white dark:focus:border-sky-400"
-							/>
-							{keyword !== '' ? (
+						{/* 大圆角搜索框走设计系统的 Input（第 61 轮）：size="lg" + shape="pill"，
+							图标与清除按钮走 prefix/suffix 槽 —— 原来是 absolute 图标 + 算出来的 pl-11/pr-12。 */}
+						<Input
+							ref={inputRef}
+							type="search"
+							size="lg"
+							shape="pill"
+							value={keyword}
+							onChange={(e) => setKeyword(e.target.value)}
+							placeholder={t('search.placeholder')}
+							aria-label={t('search.placeholder')}
+							prefix={<Search size={16} aria-hidden="true" />}
+							suffix={keyword !== '' ? (
 								<button
 									type="button"
 									onClick={clearSearch}
 									aria-label={t('search.clear')}
-									className="absolute right-2 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full text-[var(--color-text-muted)] transition duration-150 hover:bg-sky-50 hover:text-primary-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 dark:hover:bg-white/10 dark:hover:text-sky-300"
-								>
-									<X className="h-4 w-4" aria-hidden="true" />
-								</button>
-							) : null}
-						</div>
+									className="flex h-11 w-11 items-center justify-center rounded-full text-[var(--color-text-muted)] transition duration-150 hover:bg-sky-50 hover:text-primary-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 dark:hover:bg-white/10 dark:hover:text-sky-300"
+									>
+										<X size={16} aria-hidden="true" />
+									</button>
+							) : undefined}
+						/>
 						{trimmed !== '' && trimmed.length < MIN_SEARCH_CHARS ? (
 							<p className="mt-3 text-center text-xs text-[var(--color-text-muted)]">
 								{t('search.minChars', { min: MIN_SEARCH_CHARS })}
