@@ -181,7 +181,7 @@ function BrandPortal() {
 
 				<main
 					id="main-content"
-					className="mx-auto w-full max-w-6xl flex-1 px-4 pb-16 pt-10 sm:px-6 sm:pt-14"
+					className="mx-auto w-full max-w-6xl flex-1 px-4 pb-16 pt-10 sm:px-6 sm:pt-12"
 				>
 					<div className="mb-8 text-center">
 						<span className="brand-kicker">{t('hero.kicker')}</span>
